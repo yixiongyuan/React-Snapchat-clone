@@ -1,9 +1,6 @@
 # Snapchat App Clone Project
-
 # Website: https://snapchat-clone-zach.firebaseapp.com/
 
-
-# Function Introduction:
 
 ## Login Page  
 ![图片](https://user-images.githubusercontent.com/110039861/234629212-4b451cbe-0ee0-4088-a818-63d38e1cd60f.png)
