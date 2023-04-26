@@ -14,7 +14,7 @@ function Chat({ id,profilePic, username, timestamp, imageUrl, read}) {
     const navigate  = useNavigate();
 
     const open = () =>{
-        // if(!read){
+        if(!read){
             dispatch(selectImage(imageUrl));
             db.collection('posts').doc(id).update(
                 {read:true},
@@ -22,7 +22,7 @@ function Chat({ id,profilePic, username, timestamp, imageUrl, read}) {
             );
 
             navigate('/chats/view')
-        // }
+        }
     }
   return (
     <div onClick={open} className='chat'>

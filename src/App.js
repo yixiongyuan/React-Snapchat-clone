@@ -1,41 +1,67 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  Link,
+  useNavigate
 } from "react-router-dom"
 import WebcamCapture from './WebcamCapture';
 import Preview from './Preview';
 import Login from './Login';
 import Chats from './Chats';
-import Chat from './Chat';
 import ChatView from './ChatView';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, logout, selectUser } from './features/appSlice';
+import { auth } from './firebase';
 
 function App() {
+
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        dispatch(login({
+          username: authUser.displayName,
+          profilePic: authUser.photoURL,
+          id: authUser.uid,
+        }))
+      } else {
+        dispatch(logout())
+      }
+    })
+  }, [])
+
   return (
     <div className="app">
       <Router>
-        {4>5 ? (
+        {!user ? (
           <Login />
         ) : (
           <>
             {/* <Header /> */}
+            <img src="Snapchat.png" alt="" className='app_logo' />
             <div className="app_body">
-              {/* <Sidebar /> */}
+              <div className="app_body_background">
+                <Routes>
 
-              <Routes>
+                  <Route path="/chats/view" element={<ChatView />} />
 
-                <Route path="/chats/view" element={<ChatView />} />
+                  <Route path="/chats" element={<Chats />} />
 
-                <Route path="/chats" element={<Chats />} />
+                  <Route path="/preview" element={<Preview />} />
 
-                <Route path="/preview" element={<Preview />} />
+                  <Route path="/" element={<WebcamCapture />} />
 
-                <Route path="/" element={<WebcamCapture />} />
+                </Routes>
+              </div>
 
-              </Routes>
+
             </div>
 
 
@@ -43,7 +69,7 @@ function App() {
         )}
 
       </Router>
-      
+
     </div>
   );
 }

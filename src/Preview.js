@@ -15,12 +15,15 @@ import CropIcon from '@mui/icons-material/Crop';
 import TimerIcon from '@mui/icons-material/Timer'; import SendIcon from '@mui/icons-material/Send';
 import { v4 as uuid } from "uuid";
 import firebase from 'firebase/compat';
+import { selectUser } from './features/appSlice';
 
 function Preview() {
 
   const cameraImage = useSelector(selectCameraImage);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     if (!cameraImage) {
@@ -44,9 +47,9 @@ function Preview() {
           .then((url)=>{
             db.collection('posts').add({
               imageUrl:url,
-              username:'Minatozaki Sana',
+              username:user.username,
               read:false,
-              //profile
+              profilePic:user.profilePic,
               timestamp:firebase.firestore.FieldValue.serverTimestamp()
             });
             navigate('/chats', { replace: true })

@@ -18,7 +18,6 @@ function WebcamCapture() {
     const dispatch = useDispatch();
     const navigate  = useNavigate();
 
-    const [image,setImage] = useState(null)
 
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
@@ -32,8 +31,8 @@ function WebcamCapture() {
     <div className='webcamCpature'>
         <Webcam 
             audio={false}
-            // height={videoConstarints.height}
-            // width={videoConstarints.width}
+            height={videoConstarints.height}
+            width={videoConstarints.width}
             ref={webcamRef}
             screenshotFormat='image/jpeg'
             videoConstraints={videoConstarints}
@@ -46,7 +45,7 @@ function WebcamCapture() {
             fontSize='large'
         />
 
-        <img src={image} alt="" />
+        {/* <img src={image} alt="" /> */}
     </div>
   )
 }
